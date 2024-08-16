@@ -1,0 +1,16 @@
+Sub InsertPilcrowAtParagraphEnd()
+    Dim para As Paragraph
+    Dim rng As Range
+
+    ' Loop through all paragraphs in the active document
+    For Each para In ActiveDocument.Paragraphs
+        ' Get the range of the paragraph
+        Set rng = para.Range
+        
+        ' Collapse the range to the end of the paragraph (excluding paragraph mark)
+        rng.Collapse Direction:=wdCollapseEnd
+        
+        ' Insert the pilcrow symbol (¶)
+        rng.InsertAfter "¶"
+    Next para
+End Sub
