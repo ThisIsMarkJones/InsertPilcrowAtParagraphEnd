@@ -1,0 +1,39 @@
+Sub UpdatePilcrows()
+    Dim para As Paragraph
+    Dim rng As Range
+    Dim pilcrowChar As String
+    pilcrowChar = "¶" ' Define the pilcrow character
+
+    ' Remove all existing pilcrows from the start and end of each paragraph
+    For Each para In ActiveDocument.Paragraphs
+        Set rng = para.Range
+
+        ' Remove pilcrows at the start of the paragraph
+        Do While rng.Characters.First.Text = pilcrowChar
+            rng.Characters.First.Delete
+        Loop
+
+        ' Remove pilcrows at the end of the paragraph
+        rng.Collapse Direction:=wdCollapseEnd
+        Do While rng.Characters.Last.Previous.Text = pilcrowChar
+            rng.Characters.Last.Previous.Delete
+        Loop
+    Next para
+
+    ' Add a single pilcrow at the start and end of each paragraph
+    For Each para In ActiveDocument.Paragraphs
+        Set rng = para.Range
+
+        ' Add a pilcrow at the start of the paragraph if not present
+        rng.Collapse Direction:=wdCollapseStart
+        If rng.Characters.First.Text <> pilcrowChar Then
+            rng.InsertBefore pilcrowChar
+        End If
+
+        ' Add a pilcrow at the end of the paragraph if not present
+        rng.Collapse Direction:=wdCollapseEnd
+        If rng.Characters.Last.Previous.Text <> pilcrowChar Then
+            rng.InsertAfter pilcrowChar
+        End If
+    Next para
+End Sub
