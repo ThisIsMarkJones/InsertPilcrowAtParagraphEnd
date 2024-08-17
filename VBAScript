@@ -1,3 +1,18 @@
+' Declare the WithEvents variable to handle application events
+Private WithEvents App As Word.Application
+
+' Set the App variable when the document opens
+Private Sub Document_Open()
+    Set App = Word.Application
+End Sub
+
+' Event handler for before document save
+Private Sub App_DocumentBeforeSave(ByVal Doc As Document, SaveAsUI As Boolean, Cancel As Boolean)
+    ' Call your UpdatePilcrows subroutine before saving the document
+    UpdatePilcrows
+End Sub
+
+' Your existing UpdatePilcrows subroutine
 Sub UpdatePilcrows()
     Dim para As Paragraph
     Dim rng As Range
